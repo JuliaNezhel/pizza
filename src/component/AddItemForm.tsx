@@ -5,7 +5,7 @@ import { AddBox } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import { useFormik } from "formik";
 import { useAppDispatch } from "../app/store";
-import { thunkPizza } from "../app/slisePizzas";
+import { thunkPizza } from "../app/slicePizzas";
 import { AddPizzaArg } from "../api";
 
 type AddItemFormPropsTyp = {
@@ -15,7 +15,7 @@ type AddItemFormPropsTyp = {
 };
 
 export const AddItemForm = React.memo(function (props: AddItemFormPropsTyp) {
-  const dispath = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const formik = useFormik({
     validate: (values) => {
@@ -39,12 +39,11 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsTyp) {
     onSubmit: (values) => {
       props.addItem(values);
       formik.resetForm();
-      // alert(JSON.stringify(values));
     },
   });
 
   return (
-    <div className="addItenForm">
+    <div className="addItemForm">
       <form onSubmit={formik.handleSubmit}>
         <div>
           <TextField
@@ -70,7 +69,6 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsTyp) {
             <div>{formik.errors.description}</div>
           ) : null}
         </div>
-
         <Button
           variant="contained"
           onClick={() => {}}

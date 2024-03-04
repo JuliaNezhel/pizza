@@ -13,18 +13,18 @@ type PropsType = {
   name: string;
   description: string;
   pizzaId: string;
-  delitePizza: (pizzaId: string) => void;
+  deletePizza: (pizzaId: string) => void;
   updatePizza: (pizzaId: string, pizzaArg: AddPizzaArg) => void;
 };
 
 export const CardPizza = (props: PropsType) => {
   const [change, setChange] = React.useState(false);
 
-  const delitePizza = () => {
-    props.delitePizza(props.pizzaId);
+  const deletePizza = () => {
+    props.deletePizza(props.pizzaId);
   };
 
-  const resetPezza = () => {
+  const resetPizza = () => {
     setChange(!change);
   };
 
@@ -53,10 +53,10 @@ export const CardPizza = (props: PropsType) => {
       )}
 
       <CardActions>
-        <Button size="small" onClick={resetPezza}>
+        <Button size="small" onClick={resetPizza}>
           {change ? "Отмена" : "Редактировать"}
         </Button>
-        <Button size="small" onClick={delitePizza}>
+        <Button size="small" onClick={deletePizza}>
           Удалить
         </Button>
       </CardActions>

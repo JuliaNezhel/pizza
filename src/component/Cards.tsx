@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { CardPizza } from "./CardPizza";
 import { AddPizzaArg } from "../api";
-import { thunkPizza } from "../app/slisePizzas";
+import { thunkPizza } from "../app/slicePizzas";
 import { useSelector } from "react-redux";
 import { AppRootStateType, useAppDispatch } from "../app/store";
 
@@ -16,7 +16,7 @@ export const Cards = () => {
   }, []);
 
   const delitePizza = (pizzaId: string) => {
-    dispath(thunkPizza.delitePizza(pizzaId));
+    dispath(thunkPizza.deletePizza(pizzaId));
   };
 
   const updatePizza = (pizzaId: string, pizzaArg: AddPizzaArg) => {
@@ -42,7 +42,7 @@ export const Cards = () => {
                   name={el.name}
                   description={el.description}
                   pizzaId={el.id}
-                  delitePizza={delitePizza}
+                  deletePizza={delitePizza}
                   updatePizza={updatePizza}
                 />
             </Grid>

@@ -7,10 +7,16 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
-export default function Header() {
+type PropsType = {
+  handleOpen: () => void;
+};
+
+export const Header: React.FC<PropsType> = ({ handleOpen }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar 
+      // position="static"
+      position="sticky">
         <Toolbar>
           <IconButton
             size="large"
@@ -18,15 +24,16 @@ export default function Header() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={handleOpen}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            Pizza
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </Box>
   );
-}
+};

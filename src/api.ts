@@ -3,7 +3,7 @@ import axios from "axios";
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzA5MDQ1OTMwfQ.CLkYUDXO6y-RmiBjMPU07xc2Vrlj-t-ddN1lvWBkbro";
 
-const instanse = axios.create({
+const instance = axios.create({
   baseURL: "http://localhost:5000/api/",
   headers: {
     Authorization: `Bearer ${token}`,
@@ -11,17 +11,17 @@ const instanse = axios.create({
 });
 
 export const pizzasAPI = {
-  fethPizzas() {
-    return instanse.get(`pizzas`);
+  fetchPizzas() {
+    return instance.get(`pizzas`);
   },
-  delitePizza(id: string) {
-    return instanse.delete(`pizzas/${id}`);
+  deletePizza(id: string) {
+    return instance.delete(`pizzas/${id}`);
   },
   addPizza(odj: AddPizzaArg) {
-    return instanse.post(`pizzas`, odj);
+    return instance.post(`pizzas`, odj);
   },
   updatePizza(id: string, odj: AddPizzaArg) {
-    return instanse.put(`pizzas/${id}`, odj);
+    return instance.put(`pizzas/${id}`, odj);
   },
   authToken(data: AuthArg){
     return axios.post("http://localhost:5000/api/login", data)

@@ -1,12 +1,14 @@
 import  { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { configureStore, UnknownAction } from "@reduxjs/toolkit";
-import { pizzasReduser } from "./slisePizzas";
+import { pizzasReducer } from "./slicePizzas";
 import { useDispatch } from "react-redux";
+import { authReducer } from "../login/authSlise";
 
 
 export const store = configureStore({
   reducer: {
-    pizza: pizzasReduser,
+    pizza: pizzasReducer,
+    auth: authReducer,
   },
 });
 
