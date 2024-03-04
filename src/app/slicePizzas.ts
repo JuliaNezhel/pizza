@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AddPizzaArg, pizzasAPI } from "../api";
 import { AppDispatch, AppRootStateType } from "./store";
 
@@ -103,4 +103,9 @@ const updatePizza = createAppAsyncThunk<
 
 export const pizzasReducer = slice.reducer;
 export const pizzasAction = slice.actions;
-export const thunkPizza = { fetchPizza, deletePizza: deletePizza, addPizza, updatePizza };
+export const thunkPizza = {
+  fetchPizza,
+  deletePizza: deletePizza,
+  addPizza,
+  updatePizza,
+};

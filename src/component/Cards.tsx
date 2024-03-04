@@ -8,25 +8,23 @@ import { useSelector } from "react-redux";
 import { AppRootStateType, useAppDispatch } from "../app/store";
 
 export const Cards = () => {
-  const dispath = useAppDispatch();
+  const dispatch = useAppDispatch();
   const allPizza = useSelector((state: AppRootStateType) => state.pizza.pizza);
 
   useEffect(() => {
-    dispath(thunkPizza.fetchPizza());
+    dispatch(thunkPizza.fetchPizza());
   }, []);
 
-  const delitePizza = (pizzaId: string) => {
-    dispath(thunkPizza.deletePizza(pizzaId));
+  const deletePizza = (pizzaId: string) => {
+    dispatch(thunkPizza.deletePizza(pizzaId));
   };
 
   const updatePizza = (pizzaId: string, pizzaArg: AddPizzaArg) => {
-    dispath(thunkPizza.updatePizza({ pizzaArg, pizzaId }));
+    dispatch(thunkPizza.updatePizza({ pizzaArg, pizzaId }));
   };
 
   return (
-    <Box sx={{ width: "95%" }}
-    component="section"
-    style={{margin: "20px"}}>
+    <Box sx={{ width: "95%" }} component="section" style={{ margin: "20px" }}>
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
@@ -38,13 +36,13 @@ export const Cards = () => {
         {allPizza?.map((el) => {
           return (
             <Grid item xs={2} sm={4} md={4} key={el.id}>
-                <CardPizza
-                  name={el.name}
-                  description={el.description}
-                  pizzaId={el.id}
-                  deletePizza={delitePizza}
-                  updatePizza={updatePizza}
-                />
+              <CardPizza
+                name={el.name}
+                description={el.description}
+                pizzaId={el.id}
+                deletePizza={deletePizza}
+                updatePizza={updatePizza}
+              />
             </Grid>
           );
         })}

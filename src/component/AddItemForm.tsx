@@ -1,22 +1,21 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import { AddBox } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import { useFormik } from "formik";
-import { useAppDispatch } from "../app/store";
-import { thunkPizza } from "../app/slicePizzas";
 import { AddPizzaArg } from "../api";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import Box from "@mui/material/Box";
 
 type AddItemFormPropsTyp = {
   addItem: (values: AddPizzaArg) => void;
   disabled?: boolean;
   initialValues?: AddPizzaArg;
+  closeForm: () => void;
 };
 
 export const AddItemForm = React.memo(function (props: AddItemFormPropsTyp) {
-  const dispatch = useAppDispatch();
-
   const formik = useFormik({
     validate: (values) => {
       if (!values.name) {
@@ -42,11 +41,36 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsTyp) {
     },
   });
 
+  function handleClose() {
+    props.closeForm();
+  }
+
   return (
-    <div className="addItemForm">
-      <form onSubmit={formik.handleSubmit}>
+    <Dialog
+      open={true}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+      fullWidth={true}
+      maxWidth={"sm"}
+    >
+      <DialogTitle>
+        {props.initialValues?.name ? "Редактировать" : "Добавление пицц"}
+      </DialogTitle>
+      <Box
+        noValidate
+        component="form"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          m: "auto",
+          width: "fit-content",
+        }}
+        onSubmit={formik.handleSubmit}
+      >
         <div>
           <TextField
+            fullWidth
             variant="outlined"
             label="Введите название пиццы"
             margin="normal"
@@ -58,10 +82,13 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsTyp) {
         </div>
         <div>
           <TextField
+            fullWidth
             margin="normal"
             variant="outlined"
             label="Введите описание пиццы"
             type="description"
+            multiline
+            maxRows={4}
             {...formik.getFieldProps("description")}
             disabled={props.disabled}
           />
@@ -69,15 +96,13 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsTyp) {
             <div>{formik.errors.description}</div>
           ) : null}
         </div>
-        <Button
-          variant="contained"
-          onClick={() => {}}
-          disabled={props.disabled}
-          type={"submit"}
-        >
-          Добавить
-        </Button>
-      </form>
-    </div>
+        <DialogActions>
+          <Button variant="contained" disabled={props.disabled} type={"submit"}>
+            Добавить
+          </Button>
+          <Button onClick={handleClose}>Выход</Button>
+        </DialogActions>
+      </Box>
+    </Dialog>
   );
 });

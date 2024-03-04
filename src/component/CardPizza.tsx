@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import pizza from "../assets/img/pizza.avif";
 import { AddItemForm } from "./AddItemForm";
 import { AddPizzaArg } from "../api";
+import { NavLink } from "react-router-dom";
 
 type PropsType = {
   name: string;
@@ -34,27 +35,28 @@ export const CardPizza = (props: PropsType) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 , height: 1, display: 'grid', flexDirection: 'column' }}>
       <CardMedia sx={{ height: 300 }} image={pizza} title="Pizza" />
-      {change ? (
+      {change && (
         <AddItemForm
           addItem={updatePizza}
           initialValues={{ description: props.description, name: props.name }}
+          closeForm={resetPizza}
         />
-      ) : (
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {props.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {props.description}
-          </Typography>
-        </CardContent>
       )}
+
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {props.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {props.description}
+        </Typography>
+      </CardContent>
 
       <CardActions>
         <Button size="small" onClick={resetPizza}>
-          {change ? "Отмена" : "Редактировать"}
+          Редактировать
         </Button>
         <Button size="small" onClick={deletePizza}>
           Удалить
