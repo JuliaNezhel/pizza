@@ -3,7 +3,7 @@ import "./App.css";
 import { AddPizzaArg, pizzasAPI } from "./api";
 import { AddItemForm } from "./component/AddItemForm";
 import { Cards } from "./component/Cards";
-import { useAppDispatch } from "./app/store";
+import { AppRootStateType, useAppDispatch } from "./app/store";
 import { thunkPizza } from "./app/slicePizzas";
 import { Header } from "./component/header/Header";
 import { Sidebar } from "./component/sidebar/Sidebar";
@@ -16,9 +16,13 @@ import {
   Routes,
   useNavigate,
 } from "react-router-dom";
+import { AlertMessage } from "./component/alertMessage/AlertMessage";
+import LinearProgress from "@mui/material/LinearProgress";
+import { useSelector } from "react-redux";
 
 function App() {
   const dispatch = useAppDispatch();
+  const status = useSelector((state: AppRootStateType) => state.app.status);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -35,8 +39,10 @@ function App() {
 
   return (
     <div className="App">
+      <AlertMessage />
       <Header handleOpen={handleOpen} />
       <Sidebar open={open} handleClose={handleClose} />
+      {status === "loading" && <LinearProgress />}
 
       <NavLink to={"/addPizza"}>
         <Button
@@ -47,7 +53,6 @@ function App() {
           Добавить новую пиццу
         </Button>
       </NavLink>
-
       <Routes>
         <Route
           element={<AddItemForm addItem={addPizza} closeForm={closeForm} />}

@@ -8,7 +8,9 @@ import Typography from "@mui/material/Typography";
 import pizza from "../assets/img/pizza.avif";
 import { AddItemForm } from "./AddItemForm";
 import { AddPizzaArg } from "../api";
-import { NavLink } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+import { AppRootStateType } from "../app/store";
+import { useSelector } from "react-redux";
 
 type PropsType = {
   name: string;
@@ -19,6 +21,8 @@ type PropsType = {
 };
 
 export const CardPizza = (props: PropsType) => {
+  const status = useSelector((state: AppRootStateType) => state.app.status);
+
   const [change, setChange] = React.useState(false);
 
   const deletePizza = () => {
@@ -35,7 +39,15 @@ export const CardPizza = (props: PropsType) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 , height: 1, display: 'grid', flexDirection: 'column' }}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        height: 1,
+        display: "grid",
+        flexDirection: "column",
+      }}
+      style={{ position: "relative" }}
+    >
       <CardMedia sx={{ height: 300 }} image={pizza} title="Pizza" />
       {change && (
         <AddItemForm
@@ -62,6 +74,11 @@ export const CardPizza = (props: PropsType) => {
           Удалить
         </Button>
       </CardActions>
+      {status === "loading" && (
+        <CircularProgress
+          style={{ right: 0, bottom: 0, position: "absolute" }}
+        />
+      )}
     </Card>
   );
 };

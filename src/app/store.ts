@@ -3,12 +3,14 @@ import { configureStore, UnknownAction } from "@reduxjs/toolkit";
 import { pizzasReducer } from "./slicePizzas";
 import { useDispatch } from "react-redux";
 import { authReducer } from "../login/authSlise";
+import { appReducer } from "./appSlice";
 
 
 export const store = configureStore({
   reducer: {
     pizza: pizzasReducer,
     auth: authReducer,
+    app: appReducer
   },
 });
 

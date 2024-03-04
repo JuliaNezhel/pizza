@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AddPizzaArg, pizzasAPI } from "../api";
 import { AppDispatch, AppRootStateType } from "./store";
+import { appActions } from "./appSlice";
 
 //util
 const createAppAsyncThunk = createAsyncThunk.withTypes<{
@@ -53,7 +54,9 @@ const fetchPizza = createAsyncThunk<{ pizza: Pizza[] }, undefined, any>(
   async (_, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
     try {
+      dispatch(appActions.setAppStatus({ status: "loading" }));
       const res = await pizzasAPI.fetchPizzas();
+      dispatch(appActions.setAppStatus({ status: "succeeded" }));
       return { pizza: res.data };
     } catch (e: any) {
       return rejectWithValue(null);
@@ -66,7 +69,9 @@ const deletePizza = createAppAsyncThunk<{ pizzaId: string }, string>(
   async (pizzaId, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
     try {
+      dispatch(appActions.setAppStatus({ status: "loading" }));
       const res = await pizzasAPI.deletePizza(pizzaId);
+      dispatch(appActions.setAppStatus({ status: "succeeded" }));
       return { pizzaId };
     } catch (e: any) {
       return rejectWithValue(null);
@@ -79,9 +84,11 @@ const addPizza = createAppAsyncThunk<{ pizza: Pizza }, AddPizzaArg>(
   async (arg, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
     try {
+      dispatch(appActions.setAppStatus({ status: "loading" }));
       const res = await pizzasAPI.addPizza(arg);
-      dispatch(fetchPizza());
-      return { pizza: res.data };
+      dispatch(appActions.setAppStatus({ status: "succeeded" }));
+      dispatch(appActions.setAppMessage({ message: res.data.message }));
+      return { pizza: res.data.pizza };
     } catch (e: any) {
       return rejectWithValue(null);
     }
@@ -94,7 +101,10 @@ const updatePizza = createAppAsyncThunk<
 >(`${slice.name}/updatePizza`, async (arg, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI;
   try {
+    dispatch(appActions.setAppStatus({ status: "loading" }));
     const res = await pizzasAPI.updatePizza(arg.pizzaId, arg.pizzaArg);
+    dispatch(appActions.setAppStatus({ status: "succeeded" }));
+    dispatch(appActions.setAppMessage({ message: res.data.message }));
     return { pizza: res.data.pizza, pizzaId: arg.pizzaId };
   } catch (e: any) {
     return rejectWithValue(null);
