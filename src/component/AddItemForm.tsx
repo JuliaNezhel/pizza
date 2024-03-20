@@ -2,7 +2,7 @@ import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useFormik } from "formik";
-import { AddPizzaArg } from "../api";
+import { AddPizzaArg } from "../api/api";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";

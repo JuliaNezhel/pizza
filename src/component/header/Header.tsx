@@ -6,19 +6,36 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { NavLink } from "react-router-dom";
+import { AppRootStateType, useAppDispatch } from "../../app/store";
+import { thunkAuth } from "../../login/authSlise";
+import { useSelector } from "react-redux";
 
 type PropsType = {
   handleOpen: () => void;
 };
 
 export const Header: React.FC<PropsType> = ({ handleOpen }) => {
+
+const dispatch = useAppDispatch()
+
+const isLoggedIn = useSelector(
+  (state: AppRootStateType) => state.auth.isLoggedIn
+);
+
+const logOut = () =>{
+  dispatch(thunkAuth.logOut(undefined))
+}
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar 
-      // position="static"
-      position="sticky">
+      <AppBar
+        // position="static"
+        position="sticky"
+      >
+        
         <Toolbar>
-          <IconButton
+          {isLoggedIn && (<IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -27,11 +44,14 @@ export const Header: React.FC<PropsType> = ({ handleOpen }) => {
             onClick={handleOpen}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton>) }
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Pizza
           </Typography>
-          <Button color="inherit">Login</Button>
+          <NavLink to={"/login"}>
+            <Button color="inherit" style={{color: "white"}} onClick={logOut}>
+                {isLoggedIn? "выход": "Вход"}</Button>
+          </NavLink>
         </Toolbar>
       </AppBar>
     </Box>

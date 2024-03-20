@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { loginTC } from "./authSlise";
 import { Button, FormControl, FormGroup, Grid, TextField } from "@mui/material";
 import { AppRootStateType, useAppDispatch } from "../app/store";
+import { Navigate } from "react-router-dom";
 
 export const Login = () => {
   const dispatch = useAppDispatch();
@@ -34,6 +35,9 @@ export const Login = () => {
     },
   });
 
+  if (isLoggedIn) {
+    return <Navigate to={"/pizza"} />;
+  }
   return (
     <Grid container justifyContent="center">
       <Grid item xs={4}>

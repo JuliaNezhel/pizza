@@ -1,41 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
-import { AddPizzaArg, pizzasAPI } from "./api";
+import { AddPizzaArg, pizzasAPI } from "./api/api";
 import { AddItemForm } from "./component/AddItemForm";
-import { Cards } from "./component/Cards";
 import { AppRootStateType, useAppDispatch } from "./app/store";
-import { thunkPizza } from "./app/slicePizzas";
 import { Header } from "./component/header/Header";
 import { Sidebar } from "./component/sidebar/Sidebar";
-import { Login } from "./login/Login";
-import Button from "@mui/material/Button";
-import {
-  NavLink,
-  Navigate,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
 import { AlertMessage } from "./component/alertMessage/AlertMessage";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useSelector } from "react-redux";
+import { Content } from "./Contemt";
+import { authAction } from "./login/authSlise";
 
 function App() {
   const dispatch = useAppDispatch();
   const status = useSelector((state: AppRootStateType) => state.app.status);
+  const isLoggedIn = useSelector(
+    (state: AppRootStateType) => state.auth.isLoggedIn
+  );
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch(authAction.setIsLoggedIn({ value: true }));
+    }
+  }, []);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
-  const history = useNavigate();
 
-  const addPizza = (values: AddPizzaArg) => {
-    dispatch(thunkPizza.addPizza(values));
-  };
-
-  const closeForm = () => {
-    history("/pizzas");
-  };
+  // if(!isLoggedIn) {
+  //   debugger
+  //   return <Navigate to={"/login"} />
+  // }
 
   return (
     <div className="App">
@@ -44,25 +40,17 @@ function App() {
       <Sidebar open={open} handleClose={handleClose} />
       {status === "loading" && <LinearProgress />}
 
-      <NavLink to={"/addPizza"}>
-        <Button
-          variant={"contained"}
-          color="success"
-          style={{ margin: "20px" }}
-        >
-          Добавить новую пиццу
-        </Button>
-      </NavLink>
-      <Routes>
+      <Content />
+      {/* <Routes>
         <Route
           element={<AddItemForm addItem={addPizza} closeForm={closeForm} />}
           path="/addPizza"
         />
-        <Route element={<Cards />} path="/pizzas" />
-        <Route element={<Navigate to={"/pizzas"} />} path="/*" />
-      </Routes>
+        <Route element={<PizzaList />} path="/pizzas" />
+        <Route element={<Login />} path="/login" />
 
-      <Login />
+        <Route element={<Navigate to={"/pizzas"} />} path="/*" />
+      </Routes> */}
     </div>
   );
 }

@@ -1,25 +1,25 @@
 import { Dispatch } from "redux";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "../app/store";
-import { AuthArg, pizzasAPI } from "../api";
+import { AuthArg, pizzasAPI } from "../api/api";
+import { pizzasAction } from "../app/slicePizzas";
 
-const slise = createSlice({
+const slice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
-    token: "",
   },
   reducers: {
     setIsLoggedIn: (state, action: PayloadAction<{ value: boolean }>) => {
       state.isLoggedIn = action.payload.value;
     },
-    setToken: (state, action: PayloadAction<{ token: string }>) => {
-      state.token = action.payload.token;
-    },
   },
+  extraReducers: (builder) => {
+    builder.addCase(logOut.fulfilled, (state, action)=> {
+      state.isLoggedIn = action.payload.value;
+    })
+  }
 });
-export const authReducer = slise.reducer;
-export const authAction = slise.actions;
 
 // thunks
 export const loginTC =
@@ -29,7 +29,21 @@ export const loginTC =
       .authToken(data)
       .then((res) => {
         dispatch(authAction.setIsLoggedIn({ value: true }));
-        dispatch(authAction.setToken({ token: res.data }));
+        localStorage.setItem("token", res.data.accessToken);
       })
       .catch((error) => {});
   };
+
+const logOut = createAsyncThunk<{value: false}, any, any>(
+  `${slice.name}/logOut`,
+  (_, thunkAPI) => {
+    const { dispatch } = thunkAPI;
+    dispatch(authAction.setIsLoggedIn({ value: false }));
+    localStorage.removeItem("token");
+    dispatch(pizzasAction.clearStatePizza(undefined))
+    return { value: false }
+  }
+);
+export const authReducer = slice.reducer;
+export const authAction = slice.actions;
+export const thunkAuth = {logOut}

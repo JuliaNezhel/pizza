@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import pizza from "../assets/img/pizza.avif";
 import { AddItemForm } from "./AddItemForm";
-import { AddPizzaArg } from "../api";
+import { AddPizzaArg } from "../api/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AppRootStateType } from "../app/store";
 import { useSelector } from "react-redux";

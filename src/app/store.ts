@@ -31,3 +31,6 @@ export type AppDispatch = ThunkDispatch<
   unknown,
   UnknownAction
 >;
+
+//@ts-ignore
+window.store = store

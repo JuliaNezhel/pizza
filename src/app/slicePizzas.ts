@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AddPizzaArg, pizzasAPI } from "../api";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AddPizzaArg, pizzasAPI } from "../api/api";
 import { AppDispatch, AppRootStateType } from "./store";
 import { appActions } from "./appSlice";
 
@@ -15,7 +15,11 @@ const slice = createSlice({
     pizza: [] as Pizza[],
   },
   name: "pizzas",
-  reducers: {},
+  reducers: {
+    clearStatePizza: (state, action) => {
+      state.pizza = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPizza.fulfilled, (state, action) => {
@@ -59,6 +63,7 @@ const fetchPizza = createAsyncThunk<{ pizza: Pizza[] }, undefined, any>(
       dispatch(appActions.setAppStatus({ status: "succeeded" }));
       return { pizza: res.data };
     } catch (e: any) {
+      dispatch(appActions.setAppStatus({ status: "succeeded" }));
       return rejectWithValue(null);
     }
   }
@@ -107,6 +112,7 @@ const updatePizza = createAppAsyncThunk<
     dispatch(appActions.setAppMessage({ message: res.data.message }));
     return { pizza: res.data.pizza, pizzaId: arg.pizzaId };
   } catch (e: any) {
+    dispatch(appActions.setAppStatus({ status: "succeeded" }));
     return rejectWithValue(null);
   }
 });
