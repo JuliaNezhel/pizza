@@ -25,14 +25,13 @@ export const pizzasAPI = {
   updatePizza(id: string, odj: AddPizzaArg) {
     return instance.put(`pizzas/${id}`, odj);
   },
-  authToken(data: AuthArg) {
-    return axios.post("http://localhost:5000/api/login", data);
-  },
 };
 
-export type AddPizzaArg = { name: string; description: string };
+export interface AddPizzaArg  { 
+  name: string; 
+  description: string };
 
-export type AuthArg = {
+export interface AuthArg  {
   username: string;
   password: string;
 };

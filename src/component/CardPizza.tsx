@@ -7,21 +7,21 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import pizza from "../assets/img/pizza.avif";
 import { AddItemForm } from "./AddItemForm";
-import { AddPizzaArg } from "../api/api";
+import type { AddPizzaArg } from "../api/api";
 import CircularProgress from "@mui/material/CircularProgress";
-import { AppRootStateType } from "../app/store";
+import type { AppRootState } from "../app/store";
 import { useSelector } from "react-redux";
 
-type PropsType = {
+interface Props {
   name: string;
   description: string;
   pizzaId: string;
   deletePizza: (pizzaId: string) => void;
   updatePizza: (pizzaId: string, pizzaArg: AddPizzaArg) => void;
-};
+}
 
-export const CardPizza = (props: PropsType) => {
-  const status = useSelector((state: AppRootStateType) => state.app.status);
+export const CardPizza = (props: Props) => {
+  const status = useSelector((state: AppRootState) => state.app.status);
 
   const [change, setChange] = React.useState(false);
 

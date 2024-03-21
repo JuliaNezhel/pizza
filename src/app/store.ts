@@ -1,8 +1,9 @@
-import  { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { configureStore, UnknownAction } from "@reduxjs/toolkit";
+import type  { ThunkAction, ThunkDispatch } from "redux-thunk";
+import type { UnknownAction } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { pizzasReducer } from "./slicePizzas";
 import { useDispatch } from "react-redux";
-import { authReducer } from "../login/authSlise";
+import { authReducer } from "../login/authSlice";
 import { appReducer } from "./appSlice";
 
 
@@ -14,12 +15,12 @@ export const store = configureStore({
   },
 });
 
-export type AppRootStateType = ReturnType<typeof store.getState>;
+export type AppRootState = ReturnType<typeof store.getState>;
 
 // ❗ UnknownAction вместо AnyAction
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
-  AppRootStateType,
+  AppRootState,
   unknown,
   UnknownAction
 >;
@@ -27,10 +28,10 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 // export type AppDispatch = typeof store.dispatch
 // ❗ UnknownAction вместо AnyAction
 export type AppDispatch = ThunkDispatch<
-  AppRootStateType,
+  AppRootState,
   unknown,
   UnknownAction
 >;
 
-//@ts-ignore
+//  @ts-ignore
 window.store = store

@@ -1,12 +1,14 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AddPizzaArg, pizzasAPI } from "../api/api";
-import { AppDispatch, AppRootStateType } from "./store";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { pizzasAPI } from "../api/api";
+import type { AddPizzaArg } from "../api/api";
+import type { AppRootState, AppDispatch } from "./store";
+
 import { appActions } from "./appSlice";
 
-//util
+//  util
 const createAppAsyncThunk = createAsyncThunk.withTypes<{
   rejectValue: null;
-  state: AppRootStateType;
+  state: AppRootState;
   dispatch: AppDispatch;
 }>();
 
@@ -16,7 +18,7 @@ const slice = createSlice({
   },
   name: "pizzas",
   reducers: {
-    clearStatePizza: (state, action) => {
+    clearStatePizza: (state) => {
       state.pizza = [];
     },
   },
@@ -43,13 +45,13 @@ const slice = createSlice({
   },
 });
 
-export type Pizza = {
+export interface Pizza {
   id: string;
   name: string;
   description: string;
   createdAt: string;
   updatedAt: string;
-};
+}
 
 // thunks
 
@@ -75,7 +77,7 @@ const deletePizza = createAppAsyncThunk<{ pizzaId: string }, string>(
     const { dispatch, rejectWithValue } = thunkAPI;
     try {
       dispatch(appActions.setAppStatus({ status: "loading" }));
-      const res = await pizzasAPI.deletePizza(pizzaId);
+      await pizzasAPI.deletePizza(pizzaId);
       dispatch(appActions.setAppStatus({ status: "succeeded" }));
       return { pizzaId };
     } catch (e: any) {

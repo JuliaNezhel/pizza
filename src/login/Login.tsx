@@ -1,16 +1,18 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
-import { loginTC } from "./authSlise";
+// import { loginTC } from "./authSlice";
 import { Button, FormControl, FormGroup, Grid, TextField } from "@mui/material";
-import { AppRootStateType, useAppDispatch } from "../app/store";
+import type { AppRootState } from "../app/store";
+import { useAppDispatch } from "../app/store";
 import { Navigate } from "react-router-dom";
+import { thunkAuth } from "./authSlice";
 
 export const Login = () => {
   const dispatch = useAppDispatch();
 
   const isLoggedIn = useSelector(
-    (state: AppRootStateType) => state.auth.isLoggedIn
+    (state: AppRootState) => state.auth.isLoggedIn
   );
 
   const formik = useFormik({
@@ -22,7 +24,7 @@ export const Login = () => {
       }
       if (!values.password) {
         return {
-          password: "Password is required",
+          password: "password is required",
         };
       }
     },
@@ -31,12 +33,12 @@ export const Login = () => {
       password: "",
     },
     onSubmit: (values) => {
-      dispatch(loginTC(values));
+      dispatch(thunkAuth.logIn({data: values}));
     },
   });
 
   if (isLoggedIn) {
-    return <Navigate to={"/pizza"} />;
+    return <Navigate to="/pizza" />;
   }
   return (
     <Grid container justifyContent="center">
@@ -61,7 +63,7 @@ export const Login = () => {
               {formik.errors.password ? (
                 <div>{formik.errors.password}</div>
               ) : null}
-              <Button type={"submit"} variant={"contained"} color={"primary"}>
+              <Button type="submit" variant="contained" color="primary">
                 Login
               </Button>
             </FormGroup>

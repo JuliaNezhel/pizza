@@ -2,23 +2,23 @@ import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { CardPizza } from "./CardPizza";
-import { AddPizzaArg } from "../api/api";
+import type { AddPizzaArg } from "../api/api";
 import { thunkPizza } from "../app/slicePizzas";
 import { useSelector } from "react-redux";
-import { AppRootStateType, useAppDispatch } from "../app/store";
+import type { AppRootState } from "../app/store";
+import { useAppDispatch } from "../app/store";
 import { NavLink, Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 export const PizzaList = () => {
   const isLoggedIn = useSelector(
-    (state: AppRootStateType) => state.auth.isLoggedIn
+    (state: AppRootState) => state.auth.isLoggedIn
   );
 
   const dispatch = useAppDispatch();
-  const allPizza = useSelector((state: AppRootStateType) => state.pizza.pizza);
+  const allPizza = useSelector((state: AppRootState) => state.pizza.pizza);
 
   useEffect(() => {
-
     dispatch(thunkPizza.fetchPizza());
   }, []);
 
@@ -31,22 +31,22 @@ export const PizzaList = () => {
   };
 
   if (!isLoggedIn) {
-    return <Navigate to='/login'/>
+    return <Navigate to="/login" />;
   }
 
   return (
     <div>
-      <>
-        <NavLink to={"/addPizza"}>
+      <div>
+        <NavLink to="/addPizza">
           <Button
-            variant={"contained"}
+            variant="contained"
             color="success"
             style={{ margin: "20px" }}
           >
             Добавить новую пиццу
           </Button>
         </NavLink>
-      </>
+      </div>
       <Box sx={{ width: "95%" }} component="section" style={{ margin: "20px" }}>
         <Grid
           container

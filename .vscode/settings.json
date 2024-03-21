@@ -5,5 +5,8 @@
   "cSpell.ignoreWords": [
     "Formik",
     "Iiwicm"
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
 }

@@ -1,19 +1,15 @@
 import {
-  NavLink,
   Navigate,
   Route,
   Routes,
   useNavigate,
 } from "react-router-dom";
-import { AddItemForm } from "./component/AddItemForm";
-import { AppRootStateType, useAppDispatch } from "./app/store";
-import { thunkPizza } from "./app/slicePizzas";
-import { PizzaList } from "./component/PizzaList";
-import { Login } from "./login/Login";
-import { AddPizzaArg } from "./api/api";
-import { useSelector } from "react-redux";
-
-
+import { AddItemForm } from "./AddItemForm";
+import { useAppDispatch } from "../app/store";
+import { thunkPizza } from "../app/slicePizzas";
+import { PizzaList } from "./PizzaList";
+import { Login } from "../login/Login";
+import type { AddPizzaArg } from "../api/api";
 
 
 export const Content = () => {
@@ -40,7 +36,7 @@ return (
   <Route element={<PizzaList />} path="/pizzas" />
   <Route element={<Login />} path="/login" />
 
-  <Route element={<Navigate to={"/pizzas"} />} path="/*" />
+  <Route element={<Navigate to="/pizzas" />} path="/*" />
 </Routes>
 )
 }

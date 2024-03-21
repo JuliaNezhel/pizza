@@ -7,25 +7,25 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
-import { AppRootStateType, useAppDispatch } from "../../app/store";
-import { thunkAuth } from "../../login/authSlise";
+import { useAppDispatch } from "../../app/store";
+import type { AppRootState } from "../../app/store";
+import { thunkAuth } from "../../login/authSlice";
 import { useSelector } from "react-redux";
 
-type PropsType = {
+interface PropsType {
   handleOpen: () => void;
-};
+}
 
 export const Header: React.FC<PropsType> = ({ handleOpen }) => {
+  const dispatch = useAppDispatch();
 
-const dispatch = useAppDispatch()
+  const isLoggedIn = useSelector(
+    (state: AppRootState) => state.auth.isLoggedIn
+  );
 
-const isLoggedIn = useSelector(
-  (state: AppRootStateType) => state.auth.isLoggedIn
-);
-
-const logOut = () =>{
-  dispatch(thunkAuth.logOut(undefined))
-}
+  const logOut = () => {
+    dispatch(thunkAuth.logOut(undefined));
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -33,24 +33,26 @@ const logOut = () =>{
         // position="static"
         position="sticky"
       >
-        
         <Toolbar>
-          {isLoggedIn && (<IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={handleOpen}
-          >
-            <MenuIcon />
-          </IconButton>) }
+          {isLoggedIn && (
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleOpen}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Pizza
           </Typography>
-          <NavLink to={"/login"}>
-            <Button color="inherit" style={{color: "white"}} onClick={logOut}>
-                {isLoggedIn? "выход": "Вход"}</Button>
+          <NavLink to="/login">
+            <Button color="inherit" style={{ color: "white" }} onClick={logOut}>
+              {isLoggedIn ? "выход" : "Вход"}
+            </Button>
           </NavLink>
         </Toolbar>
       </AppBar>
