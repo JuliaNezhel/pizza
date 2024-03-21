@@ -1,4 +1,4 @@
-import type { AuthArg } from './api';
+import type { AuthArg } from '../../pizzas/api/api';
 import axios from "axios";
 
 

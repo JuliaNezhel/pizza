@@ -7,9 +7,9 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
-import { useAppDispatch } from "../../app/store";
-import type { AppRootState } from "../../app/store";
-import { thunkAuth } from "../../login/authSlice";
+import { useAppDispatch } from "../../../app/store";
+import type { AppRootState } from "../../../app/store";
+import { thunkAuth } from "../../../features/login/model/authSlice";
 import { useSelector } from "react-redux";
 
 interface PropsType {

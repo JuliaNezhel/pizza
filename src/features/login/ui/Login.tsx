@@ -1,12 +1,11 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
-// import { loginTC } from "./authSlice";
 import { Button, FormControl, FormGroup, Grid, TextField } from "@mui/material";
-import type { AppRootState } from "../app/store";
-import { useAppDispatch } from "../app/store";
+import type { AppRootState } from "../../../app/store";
+import { useAppDispatch } from "../../../app/store";
 import { Navigate } from "react-router-dom";
-import { thunkAuth } from "./authSlice";
+import { thunkAuth } from "../model/authSlice";
 
 export const Login = () => {
   const dispatch = useAppDispatch();

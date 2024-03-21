@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import "./App.css";
-import type { AppRootState } from "./app/store";
-import { useAppDispatch } from "./app/store";
-import { Header } from "./component/header/Header";
-import { Sidebar } from "./component/sidebar/Sidebar";
-import { AlertMessage } from "./component/alertMessage/AlertMessage";
+import type { AppRootState } from "./store";
+import { useAppDispatch } from "./store";
+import { Header } from "../common/components/header/Header";
+import { Sidebar } from "../common/components/sidebar/Sidebar";
+import { AlertMessage } from "../common/components/alertMessage/AlertMessage";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useSelector } from "react-redux";
-import { Content } from "./component/Content";
-import { authAction } from "./login/authSlice";
+import { Content } from "../common/components/content/Content";
+import { authAction } from "../features/login/model/authSlice";
 
 function App() {
   const dispatch = useAppDispatch();
   const status = useSelector((state: AppRootState) => state.app.status);
-  // const isLoggedIn = useSelector(
-  //   (state: AppRootState) => state.auth.isLoggedIn
-  // );
 
   if (localStorage.getItem("token")) {
     dispatch(authAction.setIsLoggedIn({ value: true }));
@@ -23,11 +20,6 @@ function App() {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
-
-  // if(!isLoggedIn) {
-  //   debugger
-  //   return <Navigate to={"/login"} />
-  // }
 
   return (
     <div className="App">

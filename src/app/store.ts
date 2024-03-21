@@ -1,9 +1,9 @@
 import type  { ThunkAction, ThunkDispatch } from "redux-thunk";
 import type { UnknownAction } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
-import { pizzasReducer } from "./slicePizzas";
+import { pizzasReducer } from "../features/pizzas/model/slicePizzas";
 import { useDispatch } from "react-redux";
-import { authReducer } from "../login/authSlice";
+import { authReducer } from "../features/login/model/authSlice";
 import { appReducer } from "./appSlice";
 
 

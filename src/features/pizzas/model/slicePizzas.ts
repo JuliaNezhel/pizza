@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { pizzasAPI } from "../api/api";
 import type { AddPizzaArg } from "../api/api";
-import type { AppRootState, AppDispatch } from "./store";
+import type { AppRootState, AppDispatch } from "../../../app/store";
 
-import { appActions } from "./appSlice";
+import { appActions } from "../../../app/appSlice";
 
 //  util
 const createAppAsyncThunk = createAsyncThunk.withTypes<{

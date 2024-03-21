@@ -4,12 +4,12 @@ import {
   Routes,
   useNavigate,
 } from "react-router-dom";
-import { AddItemForm } from "./AddItemForm";
-import { useAppDispatch } from "../app/store";
-import { thunkPizza } from "../app/slicePizzas";
-import { PizzaList } from "./PizzaList";
-import { Login } from "../login/Login";
-import type { AddPizzaArg } from "../api/api";
+import { AddItemForm } from "../addItemForm/AddItemForm";
+import { useAppDispatch } from "../../../app/store";
+import { thunkPizza } from "../../../features/pizzas/model/slicePizzas";
+import { PizzaList } from "../../../features/pizzas/ui/PizzaList";
+import type { AddPizzaArg } from "../../../features/pizzas/api/api";
+import { Login } from "../../../features/login/ui/Login";
 
 
 export const Content = () => {

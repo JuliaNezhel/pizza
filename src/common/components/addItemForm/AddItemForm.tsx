@@ -1,21 +1,21 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from "react";
+import React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useFormik } from "formik";
-import { AddPizzaArg } from "../api/api";
+import type { AddPizzaArg } from "../../../features/pizzas/api/api";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import Box from "@mui/material/Box";
 
-type AddItemFormPropsTyp = {
+interface AddItemFormPropsTyp {
   addItem: (values: AddPizzaArg) => void;
   disabled?: boolean;
   initialValues?: AddPizzaArg;
   closeForm: () => void;
 };
 
-export const AddItemForm = React.memo(function (props: AddItemFormPropsTyp) {
+export const AddItemForm = React.memo( (props: AddItemFormPropsTyp) => {
   const formik = useFormik({
     validate: (values) => {
       if (!values.name) {
@@ -52,7 +52,7 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsTyp) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       fullWidth={true}
-      maxWidth={"sm"}
+      maxWidth="sm"
     >
       <DialogTitle>
         {props.initialValues?.name ? "Редактировать" : "Добавление пицц"}
@@ -97,7 +97,7 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsTyp) {
           ) : null}
         </div>
         <DialogActions>
-          <Button variant="contained" disabled={props.disabled} type={"submit"}>
+          <Button variant="contained" disabled={props.disabled} type="submit">
             Добавить
           </Button>
           <Button onClick={handleClose}>Выход</Button>

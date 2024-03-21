@@ -5,38 +5,41 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import pizza from "../assets/img/pizza.avif";
-import { AddItemForm } from "./AddItemForm";
+import pizza from "./../../../common/img/pizza.avif";
+import { AddItemForm } from "../../../common/components/addItemForm/AddItemForm";
 import type { AddPizzaArg } from "../api/api";
 import CircularProgress from "@mui/material/CircularProgress";
-import type { AppRootState } from "../app/store";
+import { useAppDispatch, type AppRootState } from "../../../app/store";
 import { useSelector } from "react-redux";
+import { thunkPizza } from "../model/slicePizzas";
 
 interface Props {
   name: string;
   description: string;
   pizzaId: string;
-  deletePizza: (pizzaId: string) => void;
-  updatePizza: (pizzaId: string, pizzaArg: AddPizzaArg) => void;
 }
 
-export const CardPizza = (props: Props) => {
+export const PizzaItem = (props: Props) => {
   const status = useSelector((state: AppRootState) => state.app.status);
+  const dispatch = useAppDispatch();
 
   const [change, setChange] = React.useState(false);
 
   const deletePizza = () => {
-    props.deletePizza(props.pizzaId);
+    dispatch(thunkPizza.deletePizza(props.pizzaId));
   };
 
-  const resetPizza = () => {
+  const resetPizza = React.useCallback( () => {
     setChange(!change);
-  };
+  }, [change])
 
-  const updatePizza = (values: AddPizzaArg) => {
-    props.updatePizza(props.pizzaId, values);
-    setChange(false);
-  };
+  const updatePizza = React.useCallback(
+    (pizzaArg: AddPizzaArg) => {
+      dispatch(thunkPizza.updatePizza({ pizzaId: props.pizzaId, pizzaArg }));
+      setChange(false);
+    },
+    [dispatch]
+  );
 
   return (
     <Card

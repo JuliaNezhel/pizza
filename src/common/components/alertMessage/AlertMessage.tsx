@@ -3,9 +3,9 @@ import Alert from "@mui/material/Alert";
 import CheckIcon from "@mui/icons-material/Check";
 import Snackbar from "@mui/material/Snackbar";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../app/store";
-import type { AppRootState} from "../../app/store";
-import { appActions } from "../../app/appSlice";
+import { useAppDispatch } from "../../../app/store";
+import type { AppRootState } from "../../../app/store";
+import { appActions } from "../../../app/appSlice";
 
 export const AlertMessage = () => {
   const message = useSelector((state: AppRootState) => state.app.message);

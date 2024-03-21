@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { AuthArg } from "../api/api";
-import { pizzasAction } from "../app/slicePizzas";
+import type { AuthArg } from "../../pizzas/api/api";
+import { pizzasAction } from "../../pizzas/model/slicePizzas";
 import { authAPI } from "../api/authApi";
 
 const slice = createSlice({

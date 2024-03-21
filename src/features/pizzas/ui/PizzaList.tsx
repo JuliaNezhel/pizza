@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { CardPizza } from "./CardPizza";
-import type { AddPizzaArg } from "../api/api";
-import { thunkPizza } from "../app/slicePizzas";
+import { PizzaItem } from "./PizzaItem";
 import { useSelector } from "react-redux";
-import type { AppRootState } from "../app/store";
-import { useAppDispatch } from "../app/store";
+import type { AppRootState } from "../../../app/store";
+import { useAppDispatch } from "../../../app/store";
 import { NavLink, Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import { thunkPizza } from "../model/slicePizzas";
 
 export const PizzaList = () => {
   const isLoggedIn = useSelector(
@@ -22,13 +21,7 @@ export const PizzaList = () => {
     dispatch(thunkPizza.fetchPizza());
   }, []);
 
-  const deletePizza = (pizzaId: string) => {
-    dispatch(thunkPizza.deletePizza(pizzaId));
-  };
 
-  const updatePizza = (pizzaId: string, pizzaArg: AddPizzaArg) => {
-    dispatch(thunkPizza.updatePizza({ pizzaArg, pizzaId }));
-  };
 
   if (!isLoggedIn) {
     return <Navigate to="/login" />;
@@ -59,12 +52,10 @@ export const PizzaList = () => {
           {allPizza?.map((el) => {
             return (
               <Grid item xs={2} sm={4} md={4} key={el.id}>
-                <CardPizza
+                <PizzaItem
                   name={el.name}
                   description={el.description}
                   pizzaId={el.id}
-                  deletePizza={deletePizza}
-                  updatePizza={updatePizza}
                 />
               </Grid>
             );
