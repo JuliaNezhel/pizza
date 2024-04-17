@@ -47,7 +47,7 @@ export const Header: React.FC<PropsType> = ({ handleOpen }) => {
             </IconButton>
           )}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Pizza
+            Pizzasss
           </Typography>
           <NavLink to="/login">
             <Button color="inherit" style={{ color: "white" }} onClick={logOut}>
